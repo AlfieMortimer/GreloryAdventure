@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PlayerScript : MonoBehaviour
     float jumpAmount = 2f;
     bool onground = false;
     bool Movement = true;
+    Vector3 offsetL = new Vector3(-0.1f, -0.03f, 0);
+    Vector3 offsetR = new Vector3(0.1f, -0.03f, 0);
     //other stuff for things to work
     Rigidbody2D rb;
     Animator anim;
@@ -20,6 +23,7 @@ public class PlayerScript : MonoBehaviour
     LayerMask enemyLayerMask;
     public GameObject BulletLeft;
     public GameObject BulletRight;
+    public Image healthBar;
 
     void Start()
     {
@@ -84,6 +88,7 @@ public class PlayerScript : MonoBehaviour
             gameObject.transform.position = new Vector3(-1.127f, -1.826f, 0);
             Health = 5;
             AudioManager.instance.Play("Fail");
+            healthBar.fillAmount = 1;
         }
 
         //Shooting
@@ -93,11 +98,11 @@ public class PlayerScript : MonoBehaviour
             AudioManager.instance.Play("Shoot");
             if (sr.flipX == true)
             {
-                Instantiate(BulletLeft, transform.position, Quaternion.identity);
+                Instantiate(BulletLeft, transform.position + offsetL, Quaternion.identity);
             }
             if (sr.flipX == false)
             {
-                Instantiate(BulletRight, transform.position, Quaternion.identity);
+                Instantiate(BulletRight, transform.position + offsetR, Quaternion.identity);
             }
         }
     }
@@ -108,13 +113,15 @@ public class PlayerScript : MonoBehaviour
             gameObject.transform.position = new Vector3(-1.127f, -1.826f, 0);
             Health--;
             AudioManager.instance.Play("Fail");
+            healthBar.fillAmount -= 0.2f;
         }
         if (collision != null && collision.gameObject.tag == "Enemy")
         {
             Health--;
             AudioManager.instance.Play("Hurt");
-            anim.SetInteger("Health", 5 );
-            
+            healthBar.fillAmount -= 0.2f;
+
+
         }
     }
 
