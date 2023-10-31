@@ -15,6 +15,7 @@ public class PlayerScript : MonoBehaviour
     bool Movement = true;
     Vector3 offsetL = new Vector3(-0.1f, -0.03f, 0);
     Vector3 offsetR = new Vector3(0.1f, -0.03f, 0);
+    Vector3 Checkpoint = new Vector3(-1.127f, -1.826f, 0);
     //other stuff for things to work
     Rigidbody2D rb;
     Animator anim;
@@ -85,7 +86,7 @@ public class PlayerScript : MonoBehaviour
         //Health
         if (Health <= 0)
         {
-            gameObject.transform.position = new Vector3(-1.127f, -1.826f, 0);
+            gameObject.transform.position = Checkpoint;
             Health = 5;
             AudioManager.instance.Play("Fail");
             healthBar.fillAmount = 1;
@@ -110,7 +111,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (collision != null && collision.gameObject.tag == "Respawn")
         {
-            gameObject.transform.position = new Vector3(-1.127f, -1.826f, 0);
+            gameObject.transform.position = Checkpoint;
             Health--;
             AudioManager.instance.Play("Fail");
             healthBar.fillAmount -= 0.2f;
@@ -123,6 +124,22 @@ public class PlayerScript : MonoBehaviour
 
 
         }
+        if (collision != null && collision.gameObject.tag == "Checkpoint")
+        {
+            Checkpoint = (collision.transform.position);
+            print ("hit");
+        }
+
+
+
+
+            if (collision != null && collision.gameObject.tag == "Power" && collision.gameObject.name == "BootsPower")
+        {
+            jumpAmount = 3;
+
+        }
+        
+
     }
 
 }

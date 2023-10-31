@@ -30,5 +30,9 @@ public class Bulletscript : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (collision != null && collision.gameObject.layer == 3)
+        {
+            Destroy(gameObject);
+        }
     }
 }

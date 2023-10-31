@@ -11,9 +11,7 @@ public class BulletLeft : MonoBehaviour
     void Start()
     {
         helper = gameObject.AddComponent<Helper>();
-        StartCoroutine(SelfDestruct());
-
-    }
+        StartCoroutine(SelfDestruct());    }
 
     // Update is called once per frame
     void Update()
@@ -28,6 +26,10 @@ public class BulletLeft : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision != null && collision.gameObject.tag == "Enemy")
+        {
+            Destroy(gameObject);
+        }
+        if (collision != null && collision.gameObject.layer == 3)
         {
             Destroy(gameObject);
         }
