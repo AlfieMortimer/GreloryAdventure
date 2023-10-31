@@ -9,6 +9,7 @@ TagManager:
   - Power
   - Checkpoint
   - Ground
+  - Heal
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - UI
   - Attack
   - Power
-  - 
-  - 
+  - Reset
+  - Transition
   - 
   - 
   - 

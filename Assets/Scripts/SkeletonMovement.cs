@@ -24,6 +24,7 @@ public class SkeletonMovement : MonoBehaviour
 
     void Update()
     {
+        //Edge Check
         if (helper.GroundCheck(-0.03f, -0.1f))
         {
             speed = speed * -1;
@@ -32,6 +33,20 @@ public class SkeletonMovement : MonoBehaviour
         {
             speed = speed * -1;
         }
+        //Wall Check
+        if (helper.GroundCheck(0.06f, 0.05f))
+        {
+            speed = speed * -1;
+        }
+        if (helper.GroundCheck(-0.06f, 0.05f))
+        {
+            speed = speed * -1;
+        }
+
+
+
+
+
         transform.position = new Vector2(transform.position.x + (speed * Time.deltaTime), transform.position.y);
         if (speed > 0f)
         {

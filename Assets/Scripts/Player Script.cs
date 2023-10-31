@@ -25,6 +25,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject BulletLeft;
     public GameObject BulletRight;
     public Image healthBar;
+    public Image haveBoots;
 
     void Start()
     {
@@ -121,8 +122,12 @@ public class PlayerScript : MonoBehaviour
             Health--;
             AudioManager.instance.Play("Hurt");
             healthBar.fillAmount -= 0.2f;
-
-
+        }
+        if (collision != null && collision.gameObject.tag == "Heal")
+        {
+            Health++;
+            AudioManager.instance.Play("Hurt");
+            healthBar.fillAmount += 0.2f;
         }
         if (collision != null && collision.gameObject.tag == "Checkpoint")
         {
@@ -132,13 +137,21 @@ public class PlayerScript : MonoBehaviour
 
 
 
-
-            if (collision != null && collision.gameObject.tag == "Power" && collision.gameObject.name == "BootsPower")
+        //Reset Power
+        if (collision != null && collision.gameObject.layer == 8)
+        {
+            jumpAmount = 2;
+            print("Reset");
+            haveBoots.fillAmount = 0;
+        }
+        //Jump Power
+        if (collision != null && collision.gameObject.tag == "Power" && collision.gameObject.name == "BootsPower")
         {
             jumpAmount = 3;
-
+            haveBoots.fillAmount = 1;
         }
-        
+
+
 
     }
 
