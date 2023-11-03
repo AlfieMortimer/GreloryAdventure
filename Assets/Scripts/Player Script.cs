@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
@@ -8,7 +9,6 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
     //variables
-    float Health = 5f;
     float speed = 1f;
     float jumpAmount = 2f;
     bool onground = false;
@@ -26,6 +26,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject BulletRight;
     public Image healthBar;
     public Image haveBoots;
+    public Text Coins;
 
     void Start()
     {
@@ -34,6 +35,8 @@ public class PlayerScript : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         helper = gameObject.AddComponent<Helper>();
         enemyLayerMask = LayerMask.GetMask("Enemy");
+        healthBar.fillAmount = VariableStore.Health;
+        Coins.text = "coins: " + VariableStore.CoinCount;
     }
 
 
@@ -85,10 +88,10 @@ public class PlayerScript : MonoBehaviour
         }
 
         //Health
-        if (Health <= 0)
+        if (VariableStore.Health <= 0.1)
         {
             gameObject.transform.position = Checkpoint;
-            Health = 5;
+            VariableStore.Health = 1f;
             AudioManager.instance.Play("Fail");
             healthBar.fillAmount = 1;
         }
@@ -113,26 +116,27 @@ public class PlayerScript : MonoBehaviour
         if (collision != null && collision.gameObject.tag == "Respawn")
         {
             gameObject.transform.position = Checkpoint;
-            Health--;
+            VariableStore.Health = VariableStore.Health - 0.2f;
             AudioManager.instance.Play("Fail");
-            healthBar.fillAmount -= 0.2f;
+            healthBar.fillAmount = VariableStore.Health;
         }
         if (collision != null && collision.gameObject.tag == "Enemy")
         {
-            Health--;
+            VariableStore.Health = VariableStore.Health - 0.2f;
             AudioManager.instance.Play("Hurt");
-            healthBar.fillAmount -= 0.2f;
+            healthBar.fillAmount = VariableStore.Health;
         }
         if (collision != null && collision.gameObject.tag == "Heal")
         {
-            Health++;
+            VariableStore.Health = VariableStore.Health + 0.2f;
             AudioManager.instance.Play("Hurt");
-            healthBar.fillAmount += 0.2f;
+            healthBar.fillAmount = VariableStore.Health;
+            print(VariableStore.Health);
         }
         if (collision != null && collision.gameObject.tag == "Checkpoint")
         {
             Checkpoint = (collision.transform.position);
-            print ("hit");
+            print("hit");
         }
 
 
@@ -151,8 +155,14 @@ public class PlayerScript : MonoBehaviour
             haveBoots.fillAmount = 1;
         }
 
+        //Coin Collection
+        if (collision != null && collision.gameObject.layer == 10)
+        {
+            VariableStore.CoinCount++;
+            string coin = VariableStore.CoinCount.ToString();
+            Coins.text = "coins: " + VariableStore.CoinCount;
+        }
 
 
     }
-
 }
