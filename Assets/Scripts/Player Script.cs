@@ -43,9 +43,20 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         speed = 1f;
-        movement();
+        newMovement();
 
     }
+
+    void newMovement()
+    {
+        if ((Input.GetKey("right") || Input.GetKey("d")) == true)
+        {
+            rb.velocity = Vector2.right * 5f;
+        }
+    }
+
+
+
 
     void movement()
     {
