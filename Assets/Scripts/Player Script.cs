@@ -18,6 +18,7 @@ public class PlayerScript : MonoBehaviour
     Vector3 Checkpoint = new Vector3(-1.127f, -1.826f, 0);
     //other stuff for things to work
     Rigidbody2D rb;
+    float dirX;
     Animator anim;
     SpriteRenderer sr;
     Helper helper;
@@ -42,18 +43,11 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-        speed = 1f;
-        newMovement();
+
+        movement();
 
     }
 
-    void newMovement()
-    {
-        if ((Input.GetKey("right") || Input.GetKey("d")) == true)
-        {
-            rb.velocity = Vector2.right * 5f;
-        }
-    }
 
 
 
@@ -164,6 +158,7 @@ public class PlayerScript : MonoBehaviour
         {
             jumpAmount = 3;
             haveBoots.fillAmount = 1;
+            AudioManager.instance.Play("PowerUp");
         }
 
         //Coin Collection
@@ -172,6 +167,8 @@ public class PlayerScript : MonoBehaviour
             VariableStore.CoinCount++;
             string coin = VariableStore.CoinCount.ToString();
             Coins.text = "coins: " + VariableStore.CoinCount;
+            AudioManager.instance.Play("Coin");
+
         }
 
 

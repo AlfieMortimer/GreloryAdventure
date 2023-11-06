@@ -5,7 +5,6 @@ using UnityEngine;
 public class ShootLava : MonoBehaviour
 {
     public GameObject Blast;
-    bool shooting = true;
     float cooldownTimer = 0.75f;
     // Start is called before the first frame update
     void Start()
