@@ -104,7 +104,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9b8fbaad3507d0043adeff24448f749c, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -186,7 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1d6399cf95673449ba2bee872c57a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
   BulletLeft: {fileID: 780821786044405104, guid: 3a25dd82a629af149a3fa5f5979e39ff, type: 3}
   BulletRight: {fileID: 3080149423208280446, guid: dc956b0f9a8aa76418cc880bc38bc908, type: 3}
   healthBar: {fileID: 0}
   haveBoots: {fileID: 0}
+  Coins: {fileID: 0}

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
     //variables
-    float speed = 1f;
+    public float speed = 1f;
     float jumpAmount = 2f;
     bool onground = false;
     bool Movement = true;
@@ -44,10 +44,75 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
 
-        movement();
-
+        //movement();
+        newmovement();
     }
 
+    void newmovement()
+    {
+        //reset all anims
+        anim.SetBool("Walk", false);
+        anim.SetBool("falling", false);
+        anim.SetBool("Shooting", false);
+
+        rb.velocity = new Vector2(0, rb.velocity.y);
+
+        if ((Input.GetKey("left") && Movement == true || Input.GetKey("a")) == true)
+        {
+            rb.velocity = new Vector2(-speed, rb.velocity.y);
+            anim.SetBool("Walk", true);
+            sr.flipX = true;
+        }
+        else if ((Input.GetKey("right") || Input.GetKey("d")) == true)
+        {
+            rb.velocity = new Vector2(speed, rb.velocity.y);
+            anim.SetBool("Walk", true);
+            sr.flipX = false;
+        }
+        //Jump
+        onground = false;
+        if ((helper.GroundCheck(-0.03f, -0.085f) != false) || (helper.GroundCheck(0, -0.085f) != false) || (helper.GroundCheck(0.03f, -0.085f) != false)) //Get Spited Bitch - from AM :3
+        {
+            onground = true;
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && onground == true)
+        {
+            rb.AddForce(Vector2.up * jumpAmount, ForceMode2D.Impulse);
+            AudioManager.instance.Play("Jump");
+        }
+
+        //fall check
+        if (onground == false)
+        {
+            anim.SetBool("falling", true);
+
+        }
+
+        //Health
+        if (VariableStore.Health <= 0.1)
+        {
+            gameObject.transform.position = VariableStore.Checkpoint;
+            VariableStore.Health = 1f;
+            AudioManager.instance.Play("Fail");
+            healthBar.fillAmount = 1;
+        }
+
+        //Shooting
+        if (Input.GetKeyDown(KeyCode.LeftShift) && onground != false)
+        {
+            anim.SetBool("Shooting", true);
+            AudioManager.instance.Play("Shoot");
+            if (sr.flipX == true)
+            {
+                Instantiate(BulletLeft, transform.position + offsetL, Quaternion.identity);
+            }
+            if (sr.flipX == false)
+            {
+                Instantiate(BulletRight, transform.position + offsetR, Quaternion.identity);
+            }
+        }
+
+    }
 
 
 
@@ -95,7 +160,7 @@ public class PlayerScript : MonoBehaviour
         //Health
         if (VariableStore.Health <= 0.1)
         {
-            gameObject.transform.position = Checkpoint;
+            gameObject.transform.position = VariableStore.Checkpoint;
             VariableStore.Health = 1f;
             AudioManager.instance.Play("Fail");
             healthBar.fillAmount = 1;
@@ -120,17 +185,19 @@ public class PlayerScript : MonoBehaviour
     {
         if (collision != null && collision.gameObject.tag == "Respawn")
         {
-            gameObject.transform.position = Checkpoint;
+            gameObject.transform.position = VariableStore.Checkpoint;
             VariableStore.Health = VariableStore.Health - 0.2f;
             AudioManager.instance.Play("Fail");
             healthBar.fillAmount = VariableStore.Health;
         }
+        
         if (collision != null && collision.gameObject.tag == "Enemy")
         {
             VariableStore.Health = VariableStore.Health - 0.2f;
             AudioManager.instance.Play("Hurt");
             healthBar.fillAmount = VariableStore.Health;
         }
+        
         if (collision != null && collision.gameObject.tag == "Heal")
         {
             VariableStore.Health = VariableStore.Health + 0.2f;
@@ -140,7 +207,7 @@ public class PlayerScript : MonoBehaviour
         }
         if (collision != null && collision.gameObject.tag == "Checkpoint")
         {
-            Checkpoint = (collision.transform.position);
+            VariableStore.Checkpoint = (collision.transform.position);
             print("hit");
         }
 
@@ -172,5 +239,8 @@ public class PlayerScript : MonoBehaviour
         }
 
 
+
+
     }
+
 }

@@ -76,5 +76,9 @@ public class SkeletonMovement : MonoBehaviour
             print(EnemyHealth);
             AudioManager.instance.Play("EnemyHit");
         }
+        if (collision != null && collision.gameObject.tag == "Respawn")
+        {
+            Destroy(gameObject);
+        }
     }
 }
