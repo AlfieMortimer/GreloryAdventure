@@ -8,7 +8,7 @@ public class SkeletonMovement : MonoBehaviour
     //Variables
     bool onground = false;
     float speed = 0.5f;
-    float EnemyHealth = 3f;
+    public float EnemyHealth = 3f;
     //other stuff for things to work
     Helper helper;
     SpriteRenderer sr;
