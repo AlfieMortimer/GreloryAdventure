@@ -11,9 +11,17 @@ public class Timer : MonoBehaviour
     private int minuteCount;
     private int hourCount;
 
-    void Update()
+    private void Start()
     {
+        minuteCount = VariableStore.minuteCount;
+        secondsCount = VariableStore.secondsCount;
+    }
+    void Update()
+    {    
         UpdateTimerUI();
+        VariableStore.secondsCount = secondsCount;
+        VariableStore.minuteCount = minuteCount;
+        print(secondsCount);
     }
 
     //call this on update
@@ -33,4 +41,5 @@ public class Timer : MonoBehaviour
             minuteCount = 0;
         }
     }
+    
 }
