@@ -11,5 +11,5 @@ public class VariableStore : MonoBehaviour
     public static float secondsCount;
     public static int minuteCount = 0;
     public static int hourCount = 0;
-
+    public static float bosshealth = 20;
 }

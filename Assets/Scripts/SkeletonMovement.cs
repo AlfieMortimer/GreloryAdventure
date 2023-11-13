@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SkeletonMovement : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class SkeletonMovement : MonoBehaviour
     Helper helper;
     SpriteRenderer sr;
     LayerMask AttackLayerMask;
+    public string SceneName;
 
     void Start()
     {
@@ -58,8 +60,9 @@ public class SkeletonMovement : MonoBehaviour
         }
         if (EnemyHealth <= 0f)
         {
-        gameObject.SetActive(false);
             AudioManager.instance.Play("EnemyDeath");
+            gameObject.SetActive(false);
+            
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -78,7 +81,9 @@ public class SkeletonMovement : MonoBehaviour
         }
         if (collision != null && collision.gameObject.tag == "Respawn")
         {
-            Destroy(gameObject);
+            AudioManager.instance.Play("EnemyDeath");
+            gameObject.SetActive(false);
         }
     }
 }
+

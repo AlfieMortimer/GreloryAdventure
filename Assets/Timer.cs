@@ -21,7 +21,6 @@ public class Timer : MonoBehaviour
         UpdateTimerUI();
         VariableStore.secondsCount = secondsCount;
         VariableStore.minuteCount = minuteCount;
-        print(secondsCount);
     }
 
     //call this on update

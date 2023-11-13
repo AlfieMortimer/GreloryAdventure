@@ -24,7 +24,6 @@ public class BlastMovement : MonoBehaviour
         if (collision != null && collision.gameObject.layer == 3)
         {
             Destroy(gameObject);
-            print("hitwall");
         }
     }
 

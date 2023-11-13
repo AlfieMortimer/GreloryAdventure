@@ -33,5 +33,9 @@ public class BulletLeft : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (collision != null && collision.gameObject.tag == "Boss")
+        {
+            Destroy(gameObject);
+        }
     }
 }

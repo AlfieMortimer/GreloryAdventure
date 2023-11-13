@@ -192,14 +192,14 @@ public class PlayerScript : MonoBehaviour
             AudioManager.instance.Play("Fail");
             healthBar.fillAmount = VariableStore.Health;
         }
-        
-        if (collision != null && collision.gameObject.tag == "Enemy")
+
+        if (collision != null && collision.gameObject.layer == 12)
         {
             VariableStore.Health = VariableStore.Health - 0.2f;
             AudioManager.instance.Play("Hurt");
             healthBar.fillAmount = VariableStore.Health;
         }
-        
+
         if (collision != null && collision.gameObject.tag == "Heal")
         {
             VariableStore.Health = VariableStore.Health + 0.2f;
@@ -230,6 +230,9 @@ public class PlayerScript : MonoBehaviour
             AudioManager.instance.Play("PowerUp");
         }
 
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         //Coin Collection
         if (collision != null && collision.gameObject.layer == 10)
         {
@@ -237,12 +240,9 @@ public class PlayerScript : MonoBehaviour
             string coin = VariableStore.CoinCount.ToString();
             Coins.text = "coins: " + VariableStore.CoinCount;
             AudioManager.instance.Play("Coin");
+            Destroy(collision.gameObject);
 
         }
-
-
-
-
     }
+ }
 
-}
