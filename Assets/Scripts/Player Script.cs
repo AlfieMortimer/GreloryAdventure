@@ -55,8 +55,6 @@ public class PlayerScript : MonoBehaviour
         anim.SetBool("falling", false);
         anim.SetBool("Shooting", false);
 
-        rb.velocity = new Vector2(0, rb.velocity.y);
-
         if ((Input.GetKey("left") && Movement == true || Input.GetKey("a")) == true)
         {
             rb.velocity = new Vector2(-speed, rb.velocity.y);
@@ -68,6 +66,10 @@ public class PlayerScript : MonoBehaviour
             rb.velocity = new Vector2(speed, rb.velocity.y);
             anim.SetBool("Walk", true);
             sr.flipX = false;
+        }
+        else
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
         }
         //Jump
         onground = false;
